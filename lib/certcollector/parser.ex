@@ -1,4 +1,7 @@
 defmodule Certcollector.Parser do 
+  def parse(cert) do
+    :public_key.pkix_decode_cert(cert, :otp) |> to_json_safe
+  end
 
   def to_json_safe([:dNSName, name]) do
     [:dNSName, to_string(name)]

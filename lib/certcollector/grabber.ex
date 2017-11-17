@@ -5,6 +5,6 @@ defmodule Certcollector.Grabber do
          {:ok, socket} <- :ssl.connect(charlist, 443, [], 10000),
          {:ok, cert} <- :ssl.peercert(socket),
          :ok <- :ssl.close(socket),
-         do: :public_key.pkix_decode_cert(cert, :otp)
+         do: cert
   end
 end
