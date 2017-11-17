@@ -2,11 +2,15 @@ defmodule CertcollectorTest do
   use ExUnit.Case
 
   test "grab a certificate from a server" do
-  	assert Certcollector.get_cert("google.com") == google_fixture()
+  	assert Certcollector.Grabber.get_cert("google.com") == google_fixture()
   end
 
   test "test json encode" do
-  	google_fixture() |> Certcollector.to_json_safe |> Poison.encode
+  	{:ok, str} = google_fixture()
+    |> Certcollector.Parser.to_json_safe
+    |> Poison.encode(pretty: true)
+    {:ok, fixture} = File.read("test/fixtures/googlecom.json")
+    assert str == fixture
   end
 
   defp google_fixture do
